@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr5yc4fo23480"]
+
+[ext_resource type="ArrayMesh" uid="uid://spkt2o1jd4x1" path="res://PeppiPeppiPizzaAssets/Restaurant/porthole/Porthole_Cube.res" id="1_bm1mr"]
+[ext_resource type="Script" path="res://HingeReset2.gd" id="2_2sv3t"]
+[ext_resource type="Script" path="res://HingeReset.gd" id="2_f6iwy"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_htkqh"]
+points = PackedVector3Array(-1.3036, -2.68581, -0.0878777, -1.3036, -2.68581, 0.0878522, -1.3036, 2.68581, -0.0878777, -0.983312, 1.19042, -0.130602, -0.695439, 0.494782, -0.130602, 0, 0.207167, -0.130602, 1.3036, -2.68581, -0.0878777, 1.3036, -2.68581, 0.0878522, 0, 0.207167, 0.130577, -0.695439, 0.494782, 0.130577, -0.983312, 1.19042, 0.130577, -1.3036, 2.68581, 0.0878522, 1.3036, 2.68581, -0.0878777, 0, 2.17315, -0.130602, -0.695439, 1.88554, -0.130602, 0.695184, 0.494782, -0.130602, 0.983057, 1.19042, -0.130602, 0.695184, 0.494782, 0.130577, 1.3036, 2.68581, 0.0878522, 0.983057, 1.19042, 0.130577, 0.695184, 1.88554, 0.130602, -0.695439, 1.88554, 0.130602, 0, 2.17315, 0.130602, 0.695184, 1.88554, -0.130602)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5j0rt"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ao13l"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[node name="Door" type="Node3D"]
+
+[node name="PhysicsDoor" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00572073, 0, 0)
+collision_layer = 8
+collision_mask = 15
+
+[node name="PortholeCube" type="MeshInstance3D" parent="PhysicsDoor"]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, -0.604611, 0, 0)
+mesh = ExtResource("1_bm1mr")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsDoor"]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, -0.604611, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_htkqh")
+
+[node name="Door Frame" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.653877, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Door Frame"]
+transform = Transform3D(0.1, 0, 0, 0, 2.5, 0, 0, 0, 0.1, -0.604611, 0, 0)
+mesh = SubResource("BoxMesh_5j0rt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door Frame"]
+transform = Transform3D(0.1, 0, 0, 0, 2.5, 0, 0, 0, 0.1, -0.604611, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_ao13l")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.20568, 0, 0)
+node_a = NodePath("../PhysicsDoor")
+node_b = NodePath("../Door Frame")
+angular_limit/enable = true
+angular_limit/upper = 1.74533
+angular_limit/lower = -1.74533
+script = ExtResource("2_f6iwy")
+
+[node name="PhysicsDoor2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19028, 0, 0)
+collision_layer = 8
+collision_mask = 15
+
+[node name="PortholeCube" type="MeshInstance3D" parent="PhysicsDoor2"]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, -0.604611, 0, 0)
+mesh = ExtResource("1_bm1mr")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsDoor2"]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, -0.604611, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_htkqh")
+
+[node name="Door Frame2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.84465, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Door Frame2"]
+transform = Transform3D(0.1, 0, 0, 0, 2.5, 0, 0, 0, 0.1, -0.604611, 0, 0)
+mesh = SubResource("BoxMesh_5j0rt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door Frame2"]
+transform = Transform3D(0.1, 0, 0, 0, 2.5, 0, 0, 0, 0.1, -0.604611, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_ao13l")
+
+[node name="HingeJoint3D2" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.17869, 0, 0)
+node_a = NodePath("../PhysicsDoor2")
+node_b = NodePath("../Door Frame2")
+angular_limit/enable = true
+angular_limit/upper = 1.74533
+angular_limit/lower = -1.74533
+script = ExtResource("2_2sv3t")
+
+[node name="Door Frame Top" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1.04, 0, 1, -4.54598e-08, 0, 0, 0, 1, 0.597249, 1.28568, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Door Frame Top"]
+transform = Transform3D(0.1, 0, 0, 0, 2.5, 0, 0, 0, 0.1, 0, 0.581357, 0)
+mesh = SubResource("BoxMesh_5j0rt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door Frame Top"]
+transform = Transform3D(0.1, 0, 0, 0, 2.5, 0, 0, 0, 0.1, 0, 0.581357, 0)
+shape = SubResource("ConvexPolygonShape3D_ao13l")
