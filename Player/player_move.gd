@@ -1,11 +1,15 @@
 extends CharacterBody3D
 
 
-const SPEED = 6
+const SPEED = 8
 const JUMP_VELOCITY = 4
 const MOUSE_SENSIBILITY = 1200
 var mouse_relative_x = 0
 var mouse_relative_y = 0
+
+var max_health = 12
+var current_health = 12
+var i_frames = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,8 +23,8 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("move_jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+#	if Input.is_action_just_pressed("move_jump") and is_on_floor():
+#		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -38,6 +42,10 @@ func _physics_process(delta):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			
+	
+	check_damage()
+	
 	move_and_slide()
 
 func _input(event):
@@ -47,3 +55,16 @@ func _input(event):
 		$Camera3D.rotation.x = clamp($Camera3D.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 		mouse_relative_x = clamp(event.relative.x, -50, 50)
 		mouse_relative_y = clamp(event.relative.y, -50, 50)
+
+func check_damage():
+	for index in range(get_slide_collision_count()):
+		var source = get_slide_collision(index)
+		if source:
+			if source.get_collider().is_in_group("Damage_Source"):
+				if (not i_frames):
+					current_health -= source.get_collider().damage
+					i_frames = true
+					print("iframes on")
+					await get_tree().create_timer(1.0, false).timeout
+					print("iframes off")
+					i_frames = false

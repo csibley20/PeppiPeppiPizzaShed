@@ -8,7 +8,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if ($"../PhysicsDoor2".global_rotation.y < start_rotation.y - 0.05):
 		set_flag(FLAG_ENABLE_MOTOR, true)
 		set_param(PARAM_MOTOR_TARGET_VELOCITY, 0.5)
