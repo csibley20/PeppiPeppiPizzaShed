@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bqxrkt1hnrlge"]
+
+[resource]
+resource_name = "Topping"
+cull_mode = 2
+vertex_color_use_as_albedo = true
+roughness = 0.5

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckyf8j08uf5uk"]
+
+[ext_resource type="Script" path="res://Enemies/Basic/Basic_Enemy_Spawner.gd" id="1_7vil6"]
+[ext_resource type="Script" path="res://Wave_Info.gd" id="2_eb1nq"]
+
+[node name="Spawner" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4239, 0.679679, -10.2365)
+script = ExtResource("1_7vil6")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Waves" type="Node" parent="."]
+
+[node name="Wave0" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+
+[node name="Wave1" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 5.0
+seconds_between_spawns = 1.7
+
+[node name="Wave2" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 7.0
+seconds_between_spawns = 1.5
+
+[node name="Enemies" type="Node" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1s2s387pjrju"]
+
+[ext_resource type="PackedScene" uid="uid://d3ydp5ebqnme5" path="res://PeppiPeppiPizzaAssets/Weapons/Pizza.blend" id="1_k402m"]
+[ext_resource type="Script" path="res://Player/Pizza/Pizza_Projectile.gd" id="1_o4qfc"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dbo8i"]
+height = 0.1
+radius = 0.72
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_l88fc"]
+height = 0.1
+radius = 0.2
+
+[node name="Pizza Area" type="Area3D"]
+script = ExtResource("1_o4qfc")
+
+[node name="Pizza2" parent="." instance=ExtResource("1_k402m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.00224, 0, 0, 0, 1.00224, 0, 0, 0, 1.00224, 0, 0.015, 0)
+shape = SubResource("CylinderShape3D_dbo8i")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_l88fc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

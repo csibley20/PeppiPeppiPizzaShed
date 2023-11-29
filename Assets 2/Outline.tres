@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://6u8wplg0x1m1"]
+
+[resource]
+resource_name = "Outline"
+vertex_color_use_as_albedo = true
+metallic = 1.0

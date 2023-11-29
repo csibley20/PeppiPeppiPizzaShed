@@ -1,12 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://doyqv0tb6qbxy"]
+[gd_scene load_steps=14 format=3 uid="uid://doyqv0tb6qbxy"]
 
 [ext_resource type="Script" path="res://Player/player_move.gd" id="1_7n06o"]
 [ext_resource type="Texture2D" uid="uid://c387vsmb7g40b" path="res://Player/Health/Full Heart.png" id="2_0o5i5"]
 [ext_resource type="Texture2D" uid="uid://6w1d6csciry5" path="res://Player/Health/Empty Heart.png" id="2_528hj"]
 [ext_resource type="Script" path="res://Player/Health/Hearts.gd" id="2_sgnwx"]
+[ext_resource type="PackedScene" uid="uid://kyfs7v5745c1" path="res://PeppiPeppiPizzaAssets/Weapons/Oven.blend" id="2_wf6tu"]
 [ext_resource type="Texture2D" uid="uid://dsc8gn86ti562" path="res://Player/Health/Quarter Heart.png" id="3_ml82c"]
 [ext_resource type="Texture2D" uid="uid://noj5qpy064dw" path="res://Player/Health/Half Heart.png" id="4_pthr3"]
 [ext_resource type="Texture2D" uid="uid://dllefyorllvlr" path="res://Player/Health/Three Quarter Heart.png" id="5_2kyl1"]
+[ext_resource type="Script" path="res://GUI/Wave_Label.gd" id="9_wb8s3"]
+[ext_resource type="Script" path="res://GUI/Stamina_Bar.gd" id="10_gol68"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mdq1o"]
 
@@ -33,6 +36,8 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="MeshTexture" id="MeshTexture_1f54a"]
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_7n06o")
 
@@ -41,6 +46,15 @@ shape = SubResource("CapsuleShape3D_mdq1o")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512494, 0)
+
+[node name="Oven" parent="Camera3D" instance=ExtResource("2_wf6tu")]
+transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0.582785, -0.512494, -0.221543)
+
+[node name="Skeleton3D" parent="Camera3D/Oven/ARM_Oven" index="0"]
+bones/3/rotation = Quaternion(0.229778, -0.21178, -0.253493, 0.915474)
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -5.96046e-08, -0.336815, -0.9133)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -52,3 +66,48 @@ position = Vector2(80, 560)
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_arntn")
 frame = 4
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.0
+offset_right = 51.0
+offset_bottom = 26.0
+grow_horizontal = 2
+script = ExtResource("9_wb8s3")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -286.0
+offset_top = -99.0
+offset_right = -49.0
+offset_bottom = -59.0
+grow_horizontal = 0
+grow_vertical = 0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = SubResource("MeshTexture_1f54a")
+tint_progress = Color(1, 1, 0, 1)
+script = ExtResource("10_gol68")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/TextureProgressBar"]
+autostart = true
+
+[node name="Label" type="Label" parent="CanvasLayer/TextureProgressBar"]
+layout_mode = 0
+offset_right = 236.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Stamina"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="CanvasLayer/TextureProgressBar/Timer" to="CanvasLayer/TextureProgressBar" method="_on_timer_timeout"]
+
+[editable path="Camera3D/Oven"]
