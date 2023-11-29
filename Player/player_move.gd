@@ -23,6 +23,9 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+	$"CanvasLayer/Game Over".visible = false
+	$CanvasLayer/Pause.hide()
+	
 	camera = $Camera3D
 	oven_player = $Camera3D/Oven/AnimationPlayer
 
@@ -48,10 +51,13 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("ui_pause"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+			$CanvasLayer/Pause.hide()
+			get_tree().paused = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			
+			get_tree().paused = true
+			$CanvasLayer/Pause.show()
 	
 	if Input.is_action_just_pressed("primary_action"):
 		if can_fire:
@@ -73,7 +79,10 @@ func _physics_process(delta):
 	check_damage()
 	
 	if current_health <= 0:
-		queue_free()
+		$"CanvasLayer/Game Over".visible = true
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		get_tree().paused = true
 	
 	move_and_slide()
 
@@ -88,7 +97,7 @@ func _input(event):
 func check_damage():
 	for index in range(get_slide_collision_count()):
 		var source = get_slide_collision(index)
-		if source != null:
+		if source and source.get_collider():
 			if source.get_collider().is_in_group("Damage_Source"):
 				if (not i_frames):
 					current_health -= source.get_collider().damage
@@ -101,3 +110,9 @@ func shoot():
 	b.rotation = $Camera3D.global_rotation
 	b.velocity = -b.transform.basis.z * b.fire_velocity
 	$Camera3D/Marker3D.add_child(b)
+
+
+func _on_button_pressed():
+		$CanvasLayer/Pause.hide()
+		get_tree().paused = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
