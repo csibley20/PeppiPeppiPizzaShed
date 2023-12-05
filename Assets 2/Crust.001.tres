@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://jwgp8f5atgbr"]
 
-[ext_resource type="Texture2D" uid="uid://bahqdvwq0b1wa" path="res://PeppiPeppiPizzaAssets/Weapons/Textures/Pizza/Crust.png" id="1_6i6gt"]
+[ext_resource type="Texture2D" uid="uid://bahqdvwq0b1wa" path="res://PeppiPeppiPizzaAsset/Weapons/Textures/Pizza/Crust.png" id="1_6i6gt"]
 
 [resource]
 resource_name = "Crust.001"

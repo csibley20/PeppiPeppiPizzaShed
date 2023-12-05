@@ -4,7 +4,7 @@ var Pizza = preload("res://Player/Pizza/pizza.tscn")
 
 var camera
 
-var speed = 8
+var speed = 5
 const JUMP_VELOCITY = 4
 const MOUSE_SENSIBILITY = 1200
 var mouse_relative_x = 0
@@ -24,6 +24,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	$"CanvasLayer/Game Over".visible = false
+	$"CanvasLayer/Reset Button".visible = false
 	$CanvasLayer/Pause.hide()
 	
 	camera = $Camera3D
@@ -71,18 +72,10 @@ func _physics_process(delta):
 			can_fire = true
 	
 	if Input.is_action_pressed("sprint") and $CanvasLayer/TextureProgressBar.value > 0:
-		speed = 8
+		speed = 10
 		$CanvasLayer/TextureProgressBar.value -= 1
 	else:
 		speed = 5
-	
-	check_damage()
-	
-	if current_health <= 0:
-		$"CanvasLayer/Game Over".visible = true
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		get_tree().paused = true
 	
 	move_and_slide()
 
@@ -94,16 +87,19 @@ func _input(event):
 		mouse_relative_x = clamp(event.relative.x, -50, 50)
 		mouse_relative_y = clamp(event.relative.y, -50, 50)
 
-func check_damage():
-	for index in range(get_slide_collision_count()):
-		var source = get_slide_collision(index)
-		if source and source.get_collider():
-			if source.get_collider().is_in_group("Damage_Source"):
-				if (not i_frames):
-					current_health -= source.get_collider().damage
-					i_frames = true
-					await get_tree().create_timer(1.0, false).timeout
-					i_frames = false
+func damage_attempt(source):
+	if (not i_frames):
+		current_health -= source.damage
+		i_frames = true
+		await get_tree().create_timer(1.0, false).timeout
+		i_frames = false
+	
+	if current_health <= 0:
+		$"CanvasLayer/Game Over".visible = true
+		$"CanvasLayer/Reset Button".visible = true
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		get_tree().paused = true
 
 func shoot():
 	var b = Pizza.instantiate()
@@ -116,3 +112,8 @@ func _on_button_pressed():
 		$CanvasLayer/Pause.hide()
 		get_tree().paused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _on_reset_button_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()

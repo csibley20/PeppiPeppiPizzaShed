@@ -1,0 +1,200 @@
+[gd_scene load_steps=16 format=3 uid="uid://doyqv0tb6qbxy"]
+
+[ext_resource type="Script" path="res://Game Files/Player/player_move.gd" id="1_db88f"]
+[ext_resource type="PackedScene" uid="uid://kyfs7v5745c1" path="res://PeppiPeppiPizzaAsset/Weapons/Oven.blend" id="2_yfn5s"]
+[ext_resource type="Script" path="res://Game Files/Player/Health/Hearts.gd" id="3_no1eq"]
+[ext_resource type="Texture2D" uid="uid://6w1d6csciry5" path="res://Game Files/Player/Health/Empty Heart.png" id="4_flnw7"]
+[ext_resource type="Texture2D" uid="uid://dsc8gn86ti562" path="res://Game Files/Player/Health/Quarter Heart.png" id="5_w23kf"]
+[ext_resource type="Texture2D" uid="uid://noj5qpy064dw" path="res://Game Files/Player/Health/Half Heart.png" id="6_y8rf8"]
+[ext_resource type="Texture2D" uid="uid://dllefyorllvlr" path="res://Game Files/Player/Health/Three Quarter Heart.png" id="7_wwchf"]
+[ext_resource type="Texture2D" uid="uid://c387vsmb7g40b" path="res://Game Files/Player/Health/Full Heart.png" id="8_p8ywb"]
+[ext_resource type="Script" path="res://GUI/Wave_Label.gd" id="9_kx5t7"]
+[ext_resource type="Script" path="res://GUI/Stamina_Bar.gd" id="10_v61fb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mdq1o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_arntn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_flnw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_w23kf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_y8rf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wwchf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_p8ywb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="MeshTexture" id="MeshTexture_1f54a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ffqkm"]
+font_size = 56
+
+[sub_resource type="LabelSettings" id="LabelSettings_67muv"]
+font_size = 56
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_db88f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_mdq1o")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512494, 0)
+
+[node name="Oven" parent="Camera3D" instance=ExtResource("2_yfn5s")]
+transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0.582785, -0.512494, -0.221543)
+
+[node name="Skeleton3D" parent="Camera3D/Oven/ARM_Oven" index="0"]
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(0.229778, -0.21178, -0.253493, 0.915474)
+bones/4/rotation = Quaternion(0.557378, -2.86741e-08, -0.000330988, 0.830259)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.192956, 0.000232586, 0.000233733, 0.981207)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(0.479775, -8.25774e-08, -0.332303, 0.812029)
+bones/7/rotation = Quaternion(0.23494, 0.234972, 0.234973, 0.913444)
+bones/7/scale = Vector3(1, 1, 1)
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -5.96046e-08, -0.336815, -0.9133)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Hearts" type="Node2D" parent="CanvasLayer"]
+script = ExtResource("3_no1eq")
+
+[node name="Heart" type="AnimatedSprite2D" parent="CanvasLayer/Hearts"]
+position = Vector2(80, 560)
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_arntn")
+frame = 4
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.0
+offset_right = 51.0
+offset_bottom = 26.0
+grow_horizontal = 2
+script = ExtResource("9_kx5t7")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -286.0
+offset_top = -99.0
+offset_right = -49.0
+offset_bottom = -59.0
+grow_horizontal = 0
+grow_vertical = 0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = SubResource("MeshTexture_1f54a")
+tint_progress = Color(1, 1, 0, 1)
+script = ExtResource("10_v61fb")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/TextureProgressBar"]
+autostart = true
+
+[node name="Label" type="Label" parent="CanvasLayer/TextureProgressBar"]
+layout_mode = 0
+offset_right = 236.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Stamina"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Game Over" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 339.0
+offset_top = 280.0
+offset_right = -331.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_ffqkm")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Reset Button" type="Button" parent="CanvasLayer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 467.5
+offset_top = 400.0
+offset_right = -467.5
+offset_bottom = -195.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart"
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+process_mode = 2
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.998
+offset_left = -1.0
+offset_top = -2.0
+offset_bottom = 0.295959
+
+[node name="Label" type="Label" parent="CanvasLayer/Pause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.5
+offset_top = -174.5
+offset_right = 198.5
+offset_bottom = -80.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_67muv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Pause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.5
+offset_top = -23.5
+offset_right = 112.5
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resume"
+
+[connection signal="timeout" from="CanvasLayer/TextureProgressBar/Timer" to="CanvasLayer/TextureProgressBar" method="_on_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/Reset Button" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Button" to="." method="_on_button_pressed"]
+
+[editable path="Camera3D/Oven"]

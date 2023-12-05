@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1s2s387pjrju"]
 
-[ext_resource type="PackedScene" uid="uid://d3ydp5ebqnme5" path="res://PeppiPeppiPizzaAssets/Weapons/Pizza.blend" id="1_k402m"]
+[ext_resource type="PackedScene" uid="uid://d3ydp5ebqnme5" path="res://PeppiPeppiPizzaAsset/Weapons/Pizza.blend" id="1_k402m"]
 [ext_resource type="Script" path="res://Player/Pizza/Pizza_Projectile.gd" id="1_o4qfc"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dbo8i"]

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c387vsmb7g40b" path="res://Player/Health/Full Heart.png" id="2_0o5i5"]
 [ext_resource type="Texture2D" uid="uid://6w1d6csciry5" path="res://Player/Health/Empty Heart.png" id="2_528hj"]
 [ext_resource type="Script" path="res://Player/Health/Hearts.gd" id="2_sgnwx"]
-[ext_resource type="PackedScene" uid="uid://kyfs7v5745c1" path="res://PeppiPeppiPizzaAssets/Weapons/Oven.blend" id="2_wf6tu"]
+[ext_resource type="PackedScene" uid="uid://kyfs7v5745c1" path="res://PeppiPeppiPizzaAsset/Weapons/Oven.blend" id="2_wf6tu"]
 [ext_resource type="Texture2D" uid="uid://dsc8gn86ti562" path="res://Player/Health/Quarter Heart.png" id="3_ml82c"]
 [ext_resource type="Texture2D" uid="uid://noj5qpy064dw" path="res://Player/Health/Half Heart.png" id="4_pthr3"]
 [ext_resource type="Texture2D" uid="uid://dllefyorllvlr" path="res://Player/Health/Three Quarter Heart.png" id="5_2kyl1"]
@@ -57,7 +57,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512494, 0)
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0.582785, -0.512494, -0.221543)
 
 [node name="Skeleton3D" parent="Camera3D/Oven/ARM_Oven" index="0"]
+bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.229778, -0.21178, -0.253493, 0.915474)
+bones/4/rotation = Quaternion(0.557378, -2.86741e-08, -0.000330988, 0.830259)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.192956, 0.000232586, 0.000233733, 0.981207)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(0.479775, -8.25774e-08, -0.332303, 0.812029)
+bones/7/rotation = Quaternion(0.23494, 0.234972, 0.234973, 0.913444)
+bones/7/scale = Vector3(1, 1, 1)
 
 [node name="Marker3D" type="Marker3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -5.96046e-08, -0.336815, -0.9133)
@@ -115,15 +123,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Game Over" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -237.0
-offset_top = -44.0
-offset_right = 245.0
-offset_bottom = 39.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 339.0
+offset_top = 280.0
+offset_right = -331.0
+offset_bottom = -285.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Game Over"
@@ -132,14 +138,27 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="Reset Button" type="Button" parent="CanvasLayer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 467.5
+offset_top = 400.0
+offset_right = -467.5
+offset_bottom = -195.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart"
+
 [node name="Pause" type="Control" parent="CanvasLayer"]
 process_mode = 2
 layout_mode = 3
-anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 0.998
 offset_left = -1.0
 offset_top = -2.0
-offset_right = 1152.0
-offset_bottom = 647.0
+offset_bottom = 0.295959
 
 [node name="Label" type="Label" parent="CanvasLayer/Pause"]
 layout_mode = 1
@@ -175,6 +194,7 @@ grow_vertical = 2
 text = "Resume"
 
 [connection signal="timeout" from="CanvasLayer/TextureProgressBar/Timer" to="CanvasLayer/TextureProgressBar" method="_on_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/Reset Button" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/Button" to="." method="_on_button_pressed"]
 
 [editable path="Camera3D/Oven"]

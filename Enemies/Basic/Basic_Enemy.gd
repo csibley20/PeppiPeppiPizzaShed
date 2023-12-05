@@ -109,3 +109,9 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 
 func _on_timer_timeout():
 	idle_timer_on = false
+
+
+func _on_area_3d_2_body_entered(body):
+	if (body.is_in_group("Player")):
+		var player = body
+		player.damage_attempt(self)

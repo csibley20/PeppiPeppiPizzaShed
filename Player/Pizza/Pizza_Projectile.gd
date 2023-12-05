@@ -20,6 +20,9 @@ func _on_body_entered(body):
 	if body.is_in_group("Enemy"):
 		body.take_damage(damage)
 		queue_free()
+	if body.is_in_group("Freezer"):
+		body.get_parent().trigger()
+		queue_free()
 
 func _on_timer_timeout():
 	queue_free()

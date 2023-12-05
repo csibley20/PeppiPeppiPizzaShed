@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckrfs1quuasxc"]
+
+[ext_resource type="Script" path="res://Assets 2/Custom/Freezer.gd" id="1_5xmdr"]
+[ext_resource type="Material" uid="uid://c50f30wakbpa8" path="res://Assets 2/Custom/freezer_color.tres" id="1_jw4r8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5awpd"]
+albedo_color = Color(0, 0.835294, 0.839216, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_csbg6"]
+size = Vector3(4, 4, 0.65)
+
+[node name="Freezer" type="Node3D"]
+script = ExtResource("1_5xmdr")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+material = SubResource("StandardMaterial3D_5awpd")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 3.55271e-15, 0, 0, 1, 0, -1.77636e-15, -0.5)
+size = Vector3(1, 1, 0.65)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGMesh3D"]
+transform = Transform3D(1.5, 0, 0, 0, -8.74228e-09, -1.5, 0, 0.2, -6.55671e-08, 0, 0, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(1, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1, 0, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(1, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1, 0, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(-4.37114e-08, -0.15, 0, 1, -6.55671e-09, 0, 0, 0, 0.15, 0, 1, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(-4.37114e-08, -0.15, 0, 1, -6.55671e-09, 0, 0, 0, 0.15, 0, -1, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(0.707107, -0.106066, 0, 0.707107, 0.106066, 0, 0, 0, 0.15, 0.71, 0.71, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(0.707107, -0.106066, 0, 0.707107, 0.106066, 0, 0, 0, 0.15, -0.71, -0.71, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(0.707107, -0.106066, 0, 0.707107, 0.106066, 0, 0, 0, 0.15, -0.71, -0.71, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(0.707107, 0.106066, 0, -0.707107, 0.106066, 0, 0, 0, 0.15, 0.71, -0.71, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGMesh3D"]
+transform = Transform3D(0.707107, 0.106066, 0, -0.707107, 0.106066, 0, 0, 0, 0.15, -0.71, 0.71, 0)
+material = ExtResource("1_jw4r8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["Freezer"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+shape = SubResource("BoxShape3D_csbg6")

@@ -1,0 +1,41 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cm3wapgrdt62a"]
+
+[sub_resource type="Shader" id="Shader_sdj6f"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 3.0;
+
+void vertex() {
+	vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+	vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+	
+	vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+	
+	clip_position.xy += offset;
+	
+	POSITION = clip_position;
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_88umj"]
+render_priority = 0
+shader = SubResource("Shader_sdj6f")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 3.0
+
+[resource]
+resource_name = "Window"
+next_pass = SubResource("ShaderMaterial_88umj")
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.905882, 0.905882, 0.905882, 0.45098)
+roughness = 0.5

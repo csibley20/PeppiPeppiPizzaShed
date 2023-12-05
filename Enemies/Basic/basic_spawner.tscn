@@ -13,16 +13,51 @@ script = ExtResource("1_7vil6")
 
 [node name="Wave0" type="Node" parent="Waves"]
 script = ExtResource("2_eb1nq")
+seconds_between_spawns = 2.5
 
 [node name="Wave1" type="Node" parent="Waves"]
 script = ExtResource("2_eb1nq")
-num_enemies = 5.0
-seconds_between_spawns = 1.7
+num_enemies = 4.0
+seconds_between_spawns = 2.4
 
 [node name="Wave2" type="Node" parent="Waves"]
 script = ExtResource("2_eb1nq")
+num_enemies = 5.0
+seconds_between_spawns = 2.3
+
+[node name="Wave3" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 6.0
+seconds_between_spawns = 2.2
+
+[node name="Wave4" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
 num_enemies = 7.0
-seconds_between_spawns = 1.5
+seconds_between_spawns = 2.1
+
+[node name="Wave5" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 8.0
+
+[node name="Wave6" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 9.0
+seconds_between_spawns = 1.9
+
+[node name="Wave7" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 10.0
+seconds_between_spawns = 1.8
+
+[node name="Wave8" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 11.0
+seconds_between_spawns = 1.7
+
+[node name="Wave9" type="Node" parent="Waves"]
+script = ExtResource("2_eb1nq")
+num_enemies = 12.0
+seconds_between_spawns = 1.6
 
 [node name="Enemies" type="Node" parent="."]
 
